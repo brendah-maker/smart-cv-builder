@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart CV Builder Kenya</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+  body { font-family: 'Segoe UI', sans-serif; }
+  @media print {
+    body * { visibility: hidden; }
+    #cvPreview, #cvPreview * { visibility: visible; }
+    #cvPreview { position: absolute; left: 0; top: 0; width: 100%; }
+  }
+</style>
+
+</head>
+
+<body class="bg-gray-100">
+
+<header class="bg-white shadow p-4 text-center">
+  <h1 class="text-2xl font-bold text-blue-600">
+    Smart CV Builder for Kenya
+  </h1>
+  <p class="text-gray-500 text-sm">
+    Build a professional CV in minutes
+  </p>
+</header>
+
+<main class="max-w-6xl mx-auto p-6 grid md:grid-cols-2 gap-8">
+
+<!-- ================= FORM ================= -->
+<div class="bg-white p-6 rounded-xl shadow">
+
+<h2 class="text-xl font-bold mb-4">Enter Your Details</h2>
+
+<div class="space-y-4">
+
+<input id="fullName" type="text" placeholder="Full Name"
+class="w-full border p-3 rounded-lg">
+
+<textarea id="objective" rows="3"
+placeholder="Career Objective"
+class="w-full border p-3 rounded-lg"></textarea>
+
+<textarea id="skills" rows="3"
+placeholder="Skills (comma separated)"
+class="w-full border p-3 rounded-lg"></textarea>
+
+<textarea id="experience" rows="4"
+placeholder="Experience (separate points with line break)"
+class="w-full border p-3 rounded-lg"></textarea>
+
+<textarea id="education" rows="3"
+placeholder="Education"
+class="w-full border p-3 rounded-lg"></textarea>
+
+<textarea id="achievements" rows="3"
+placeholder="Achievements (separate points with line break)"
+class="w-full border p-3 rounded-lg"></textarea>
+
+<button id="generateBtn"
+class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700">
+Generate CV
+</button>
+
+<button onclick="window.print()"
+class="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700">
+Download as PDF
+</button>
+
+</div>
+</div>
+
+<!-- ================= PREVIEW ================= -->
+<div id="cvPreview" class="bg-white p-8 rounded-xl shadow">
+
+<h2 class="text-xl font-semibold text-gray-400 text-center">
+Your CV Preview Appears Here
+</h2>
+
+</div>
+
+</main>
+
+<script src="script.js"></script>
+
+</body>
+</html>
