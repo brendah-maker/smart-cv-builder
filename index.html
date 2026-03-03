@@ -1,97 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Smart CV Builder Kenya — Pro MVP</title>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart CV Builder Kenya — MVP</title>
   <script src="https://cdn.tailwindcss.com"></script>
-
   <style>
     body { font-family: 'Segoe UI', sans-serif; }
     @media print {
       body * { visibility: hidden; }
       #cvPreview, #cvPreview * { visibility: visible; }
-      #cvPreview { position: absolute; left: 0; top: 0; width: 100%; }
+      #cvPreview { position: absolute; left:0; top:0; width:100%; }
     }
-    .keyword-miss { color: #b91c1c; font-weight:600; } /* red */
-    .keyword-hit  { color: #065f46; font-weight:600; } /* green */
+    .keyword-miss { color: #b91c1c; font-weight:600; }
+    .keyword-hit  { color: #065f46; font-weight:600; }
   </style>
 </head>
 <body class="bg-gray-100">
 
 <header class="bg-white shadow p-4 text-center">
-  <h1 class="text-2xl font-bold text-blue-600">Smart CV Builder for Kenya — Pro MVP</h1>
-  <p class="text-gray-500 text-sm">Quick templates, ATS checker, and smart suggestions—no API required.</p>
+  <h1 class="text-2xl font-bold text-blue-600">Smart CV Builder for Kenya — MVP</h1>
+  <p class="text-gray-500 text-sm">Paste your info and get a polished, rephrased CV. No generic content!</p>
 </header>
 
 <main class="max-w-7xl mx-auto p-6 grid md:grid-cols-3 gap-6">
 
-  <!-- ===== LEFT: Form ===== -->
+  <!-- LEFT: Form -->
   <div class="md:col-span-1 bg-white p-6 rounded-xl shadow space-y-4">
-    <label class="block text-sm font-medium text-gray-700">Template</label>
+    <label class="block text-sm font-medium">Template</label>
     <select id="templateSelect" class="w-full border p-2 rounded-lg">
       <option value="classic">Classic Professional</option>
       <option value="modern">Modern Minimal</option>
       <option value="executive">Two-Column Executive</option>
     </select>
 
-    <label class="block text-sm font-medium text-gray-700">Full name</label>
-    <input id="fullName" type="text" class="w-full border p-2 rounded-lg" placeholder="Jane Doe" />
+    <label class="block text-sm font-medium mt-2">Full Name</label>
+    <input id="fullName" type="text" class="w-full border p-2 rounded-lg" placeholder="Jane Doe">
 
-    <label class="block text-sm font-medium text-gray-700">Role / Target Job Title</label>
-    <input id="jobTitle" type="text" class="w-full border p-2 rounded-lg" placeholder="Customer Experience Associate" />
+    <label class="block text-sm font-medium mt-2">Target Role / Job Title</label>
+    <input id="jobTitle" type="text" class="w-full border p-2 rounded-lg" placeholder="Customer Experience Associate">
 
-    <label class="block text-sm font-medium text-gray-700">Job description (optional — paste target JD to surface keywords)</label>
-    <textarea id="jobDescription" rows="4" class="w-full border p-2 rounded-lg" placeholder="Paste job description here to check ATS keywords..."></textarea>
-
-    <div class="flex gap-2">
-      <button id="analyzeBtn" class="flex-1 bg-yellow-500 text-white py-2 rounded-lg">Analyze JD</button>
-      <button id="suggestBulletsBtn" class="flex-1 bg-indigo-600 text-white py-2 rounded-lg">Suggest Bullets</button>
+    <label class="block text-sm font-medium mt-2">Career Objective</label>
+    <textarea id="objective" rows="3" class="w-full border p-2 rounded-lg" placeholder="Write your professional summary"></textarea>
+    <div class="flex gap-2 mt-1">
+      <button id="insertObjectiveSample" class="bg-gray-200 px-3 py-1 rounded">Insert sample</button>
+      <button id="generateWithAI" class="bg-blue-600 text-white px-3 py-1 rounded">Polish Objective</button>
     </div>
 
-    <div>
-      <label class="block text-sm font-medium text-gray-700">Career objective</label>
-      <textarea id="objective" rows="3" class="w-full border p-2 rounded-lg" placeholder="Short professional summary"></textarea>
-      <div class="flex gap-2 mt-2">
-        <button id="insertObjectiveSample" class="bg-gray-200 px-3 py-1 rounded">Insert sample objective</button>
-        <button id="generateWithAI" class="bg-blue-600 text-white px-3 py-1 rounded">Generate with AI (rule-based)</button>
-      </div>
-    </div>
+    <label class="block text-sm font-medium mt-2">Skills (comma separated)</label>
+    <textarea id="skills" rows="2" class="w-full border p-2 rounded-lg" placeholder="Python, Communication, Customer Success"></textarea>
 
-    <div>
-      <label class="block text-sm font-medium text-gray-700">Skills (comma separated)</label>
-      <textarea id="skills" rows="2" class="w-full border p-2 rounded-lg" placeholder="python, customer success, communication"></textarea>
-    </div>
+    <label class="block text-sm font-medium mt-2">Experience (one per line)</label>
+    <textarea id="experience" rows="5" class="w-full border p-2 rounded-lg" placeholder="• Led onboarding sessions..."></textarea>
 
-    <div>
-      <label class="block text-sm font-medium text-gray-700">Experience (one per line)</label>
-      <textarea id="experience" rows="5" class="w-full border p-2 rounded-lg" placeholder="• Led onboarding sessions..."></textarea>
-      <div class="text-xs text-gray-500 mt-1">Tip: put one responsibility or result per line.</div>
-    </div>
+    <label class="block text-sm font-medium mt-2">Achievements (one per line)</label>
+    <textarea id="achievements" rows="3" class="w-full border p-2 rounded-lg"></textarea>
 
-    <div>
-      <label class="block text-sm font-medium text-gray-700">Achievements (one per line)</label>
-      <textarea id="achievements" rows="3" class="w-full border p-2 rounded-lg"></textarea>
-    </div>
+    <label class="block text-sm font-medium mt-2">Education</label>
+    <input id="education" class="w-full border p-2 rounded-lg" placeholder="BSc — University, Year">
 
-    <div>
-      <label class="block text-sm font-medium text-gray-700">Education</label>
-      <input id="education" class="w-full border p-2 rounded-lg" placeholder="BSc — University, Year" />
-    </div>
-
-    <div class="flex gap-2">
+    <div class="flex gap-2 mt-3">
       <button id="generateBtn" class="flex-1 bg-blue-600 text-white py-2 rounded-lg">Generate CV</button>
       <button onclick="window.print()" class="flex-1 bg-green-600 text-white py-2 rounded-lg">Download PDF</button>
     </div>
 
     <div id="atsReport" class="mt-3 text-sm"></div>
-    <div class="mt-2 text-xs text-gray-500">Want full AI? Later we can wire this to OpenAI for stronger rewrites (server required).</div>
   </div>
 
-  <!-- ===== CENTER: Preview (wide) ===== -->
+  <!-- CENTER: CV Preview -->
   <div id="cvPreview" class="md:col-span-2 bg-white p-6 rounded-xl shadow min-h-[480px]">
-    <div class="text-center text-gray-400">Your CV preview will appear here after clicking <strong>Generate CV</strong>.</div>
+    <div class="text-center text-gray-400">Your polished CV will appear here after clicking <strong>Generate CV</strong>.</div>
   </div>
 
 </main>
