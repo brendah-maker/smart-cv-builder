@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function generateCV() {
 
+    const template = document.getElementById("templateSelect").value;
     const name = document.getElementById("fullName").value;
     const objective = document.getElementById("objective").value;
     const skills = document.getElementById("skills").value;
@@ -14,79 +15,150 @@ document.addEventListener("DOMContentLoaded", function () {
     const education = document.getElementById("education").value;
     const achievements = document.getElementById("achievements").value;
 
+    const formattedSkills = formatSkills(skills);
     const formattedExperience = formatBullets(experience);
     const formattedAchievements = formatBullets(achievements);
-    const formattedSkills = formatSkills(skills);
+    const improvedObjective = rewriteObjective(objective);
 
-    preview.innerHTML = `
+    if (template === "classic") {
+      preview.innerHTML = classicTemplate(name, improvedObjective, formattedSkills, formattedExperience, education, formattedAchievements);
+    }
+
+    if (template === "modern") {
+      preview.innerHTML = modernTemplate(name, improvedObjective, formattedSkills, formattedExperience, education, formattedAchievements);
+    }
+
+    if (template === "executive") {
+      preview.innerHTML = executiveTemplate(name, improvedObjective, formattedSkills, formattedExperience, education, formattedAchievements);
+    }
+  }
+
+  // ===============================
+  // TEMPLATES
+  // ===============================
+
+  function classicTemplate(name, objective, skills, experience, education, achievements) {
+    return `
       <div class="space-y-6 text-gray-800">
+        <h1 class="text-3xl font-bold text-blue-700">${name || "Your Name"}</h1>
+        <hr>
+
+        <section>
+          <h2 class="font-bold text-blue-600">Career Objective</h2>
+          <p>${objective}</p>
+        </section>
+
+        <section>
+          <h2 class="font-bold text-blue-600">Skills</h2>
+          <ul class="list-disc ml-6">${skills}</ul>
+        </section>
+
+        <section>
+          <h2 class="font-bold text-blue-600">Experience</h2>
+          <ul class="list-disc ml-6">${experience}</ul>
+        </section>
+
+        <section>
+          <h2 class="font-bold text-blue-600">Education</h2>
+          <p>${education}</p>
+        </section>
+
+        <section>
+          <h2 class="font-bold text-blue-600">Achievements</h2>
+          <ul class="list-disc ml-6">${achievements}</ul>
+        </section>
+      </div>
+    `;
+  }
+
+  function modernTemplate(name, objective, skills, experience, education, achievements) {
+    return `
+      <div class="space-y-6 text-gray-800">
+        <h1 class="text-4xl font-extrabold">${name || "Your Name"}</h1>
+
+        <p class="italic text-gray-600">${objective}</p>
 
         <div>
-          <h1 class="text-3xl font-bold text-blue-700">${name || "Your Name"}</h1>
-          <hr class="mt-2">
+          <h2 class="font-semibold uppercase text-sm tracking-wider text-gray-500">Skills</h2>
+          <ul class="list-disc ml-6">${skills}</ul>
         </div>
 
         <div>
-          <h2 class="font-bold text-lg text-blue-600">Career Objective</h2>
-          <p>${rewriteObjective(objective)}</p>
+          <h2 class="font-semibold uppercase text-sm tracking-wider text-gray-500">Experience</h2>
+          <ul class="list-disc ml-6">${experience}</ul>
         </div>
 
         <div>
-          <h2 class="font-bold text-lg text-blue-600">Skills</h2>
-          <ul class="list-disc ml-6">${formattedSkills}</ul>
-        </div>
-
-        <div>
-          <h2 class="font-bold text-lg text-blue-600">Experience</h2>
-          <ul class="list-disc ml-6">${formattedExperience}</ul>
-        </div>
-
-        <div>
-          <h2 class="font-bold text-lg text-blue-600">Education</h2>
+          <h2 class="font-semibold uppercase text-sm tracking-wider text-gray-500">Education</h2>
           <p>${education}</p>
         </div>
 
         <div>
-          <h2 class="font-bold text-lg text-blue-600">Achievements</h2>
-          <ul class="list-disc ml-6">${formattedAchievements}</ul>
+          <h2 class="font-semibold uppercase text-sm tracking-wider text-gray-500">Achievements</h2>
+          <ul class="list-disc ml-6">${achievements}</ul>
+        </div>
+      </div>
+    `;
+  }
+
+  function executiveTemplate(name, objective, skills, experience, education, achievements) {
+    return `
+      <div class="grid grid-cols-3 gap-6 text-gray-800">
+        <div class="col-span-1 bg-gray-100 p-4 rounded-lg space-y-6">
+          <h1 class="text-2xl font-bold">${name || "Your Name"}</h1>
+
+          <div>
+            <h2 class="font-bold text-blue-600">Skills</h2>
+            <ul class="list-disc ml-6">${skills}</ul>
+          </div>
+
+          <div>
+            <h2 class="font-bold text-blue-600">Education</h2>
+            <p>${education}</p>
+          </div>
         </div>
 
+        <div class="col-span-2 space-y-6">
+          <section>
+            <h2 class="font-bold text-blue-600">Professional Summary</h2>
+            <p>${objective}</p>
+          </section>
+
+          <section>
+            <h2 class="font-bold text-blue-600">Experience</h2>
+            <ul class="list-disc ml-6">${experience}</ul>
+          </section>
+
+          <section>
+            <h2 class="font-bold text-blue-600">Achievements</h2>
+            <ul class="list-disc ml-6">${achievements}</ul>
+          </section>
+        </div>
       </div>
     `;
   }
 
   // ===============================
-  // Format Skills
+  // FORMATTING FUNCTIONS
   // ===============================
-  function formatSkills(skillsText) {
-    if (!skillsText) return "<li>List your skills here</li>";
 
-    return skillsText.split(",")
+  function formatSkills(text) {
+    if (!text) return "<li>Add skills here</li>";
+
+    return text.split(",")
       .map(skill => `<li>${capitalize(skill.trim())}</li>`)
       .join("");
   }
 
-  // ===============================
-  // Format Bullets + Auto Action Verbs
-  // ===============================
   function formatBullets(text) {
     if (!text) return "<li>Add details here</li>";
 
-    const lines = text.split("\n");
-
-    return lines.map(line => {
-      let cleanLine = line.trim();
-      if (!cleanLine) return "";
-
-      cleanLine = improveSentence(cleanLine);
-
-      return `<li>${cleanLine}</li>`;
-    }).join("");
+    return text.split("\n")
+      .filter(line => line.trim() !== "")
+      .map(line => `<li>${improveSentence(line.trim())}</li>`)
+      .join("");
   }
 
-  // ===============================
-  // Achievement Rewriter
-  // ===============================
   function improveSentence(sentence) {
 
     const weakPhrases = [
@@ -104,7 +176,8 @@ document.addEventListener("DOMContentLoaded", function () {
       "Optimized",
       "Managed",
       "Coordinated",
-      "Improved"
+      "Improved",
+      "Executed"
     ];
 
     weakPhrases.forEach(phrase => {
@@ -117,15 +190,14 @@ document.addEventListener("DOMContentLoaded", function () {
     return capitalize(sentence);
   }
 
-  // ===============================
-  // Rewrite Objective (Simple Enhancement)
-  // ===============================
   function rewriteObjective(text) {
-    if (!text) return "Motivated professional seeking opportunity to contribute skills and grow within a dynamic organization.";
+    if (!text) {
+      return "Results-driven professional committed to delivering measurable impact and continuous improvement.";
+    }
 
-    return "Results-driven professional with expertise in " +
+    return "Results-driven professional with experience in " +
            text +
-           ". Committed to delivering measurable impact and continuous improvement.";
+           ". Focused on driving performance, improving processes, and delivering exceptional value.";
   }
 
   function capitalize(word) {
