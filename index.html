@@ -9,6 +9,7 @@
 
 <style>
   body { font-family: 'Segoe UI', sans-serif; }
+
   @media print {
     body * { visibility: hidden; }
     #cvPreview, #cvPreview * { visibility: visible; }
@@ -25,11 +26,11 @@
     Smart CV Builder for Kenya
   </h1>
   <p class="text-gray-500 text-sm">
-    Build a professional CV in minutes
+    Choose a template. Generate. Download. Done.
   </p>
 </header>
 
-<main class="max-w-6xl mx-auto p-6 grid md:grid-cols-2 gap-8">
+<main class="max-w-7xl mx-auto p-6 grid md:grid-cols-2 gap-8">
 
 <!-- ================= FORM ================= -->
 <div class="bg-white p-6 rounded-xl shadow">
@@ -37,6 +38,12 @@
 <h2 class="text-xl font-bold mb-4">Enter Your Details</h2>
 
 <div class="space-y-4">
+
+<select id="templateSelect" class="w-full border p-3 rounded-lg">
+  <option value="classic">Classic Professional</option>
+  <option value="modern">Modern Minimal</option>
+  <option value="executive">Two-Column Executive</option>
+</select>
 
 <input id="fullName" type="text" placeholder="Full Name"
 class="w-full border p-3 rounded-lg">
@@ -49,16 +56,16 @@ class="w-full border p-3 rounded-lg"></textarea>
 placeholder="Skills (comma separated)"
 class="w-full border p-3 rounded-lg"></textarea>
 
-<textarea id="experience" rows="4"
-placeholder="Experience (separate points with line break)"
+<textarea id="experience" rows="5"
+placeholder="Experience (one responsibility per line)"
 class="w-full border p-3 rounded-lg"></textarea>
 
 <textarea id="education" rows="3"
 placeholder="Education"
 class="w-full border p-3 rounded-lg"></textarea>
 
-<textarea id="achievements" rows="3"
-placeholder="Achievements (separate points with line break)"
+<textarea id="achievements" rows="4"
+placeholder="Achievements (one per line)"
 class="w-full border p-3 rounded-lg"></textarea>
 
 <button id="generateBtn"
@@ -76,16 +83,13 @@ Download as PDF
 
 <!-- ================= PREVIEW ================= -->
 <div id="cvPreview" class="bg-white p-8 rounded-xl shadow">
-
-<h2 class="text-xl font-semibold text-gray-400 text-center">
+<h2 class="text-xl text-gray-400 text-center">
 Your CV Preview Appears Here
 </h2>
-
 </div>
 
 </main>
 
 <script src="script.js"></script>
-
 </body>
 </html>
